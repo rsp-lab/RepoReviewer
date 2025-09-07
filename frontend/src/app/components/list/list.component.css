@@ -9,7 +9,7 @@ td.date-col, th.date-col {
 td.repository-col, th.repository-col {
     max-width: 300px;
     white-space: normal;
-    word-break: break-all; /* łamie długie linki */
+    word-break: break-all;
     overflow: hidden;
     text-overflow: ellipsis;
 }

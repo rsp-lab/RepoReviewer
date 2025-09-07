@@ -25,9 +25,6 @@ export class ReviewComponent implements OnInit
 
     private sortedIssueList: IssueModel[] = [];
     sortField?: keyof IssueModel;
-    // | <- union, albo asc, albo desc tylko, prosta alternatywa dla enum
-    // variable ?? 0 <- jeśli variable jest null lub undefined użyj wartości domyślnej 0
-    // variable || 0 <- jeśli variable jest dodatkowo 0, blank, false to też użyj wartości domyślnej 0
     sortDirection: 'asc' | 'desc' = 'asc';
 
     private readonly pageSize: number = 15;
@@ -93,15 +90,12 @@ export class ReviewComponent implements OnInit
     };
 
     ngOnInit(): void {
-        // Do przekazywania między routes można użyć history.state
         this.scanResult = history.state.scanResult;
         console.log('Received scanResult:', this.scanResult);
 
         if (this.scanResult) {
-            // Kopiujemy tablicę, żeby sortować już po stronie klienta
             this.sortedIssueList = [ ...this.scanResult.issues ];
 
-            // Math.ceil(...) <- Zaokrągla w górę wynik, którym jest liczba stron w ułamku np. 23 / 10 = 2.3
             this.totalPages = Math.max(1, Math.ceil(this.sortedIssueList.length / this.pageSize));
 
             this.doughnutChartData = {
@@ -123,11 +117,9 @@ export class ReviewComponent implements OnInit
         }
     }
 
-    // field musi być elementem IssueModel (np. filePath, lineNumber, severity, description, itd.)
     sortByField(field: keyof IssueModel) {
         console.log('Sorting by field:', field);
 
-        // as keyof robi rzutowanie
         const result = sortByGenericField(this.sortedIssueList, field, this.sortField, this.sortDirection);
         this.sortedIssueList = result.sortedArray;
         this.sortDirection = result.newDirection;
@@ -136,11 +128,6 @@ export class ReviewComponent implements OnInit
         this.currentPage = 1;
     }
 
-    // Funkcja do obliczenia stron
-    /*
-        get <- Getter dla pola, pozwala wywołać logikę bez użycia (), np. używając this.pagedIssues
-        slice() <- wycina odpowiedni fragment tablicy.
-    */
     get pagedIssues(): IssueModel[] {
         if (!this.sortedIssueList)
             return [];
@@ -149,15 +136,6 @@ export class ReviewComponent implements OnInit
         return this.sortedIssueList.slice(startIndex, startIndex + this.pageSize);
     }
 
-    /*
-        async <- Funkcję można używać asynchronicznie i przez to zwraca Promise<T>. Funkcja musi
-          zostać wywołana asynchronicznie, by można było coś robić w tle np. podczas generowania pdf,
-          generateCodeReviewPdf() działa asynchronicznie.
-        Dzięki temu, że funkcja exportToPdf() też jest asynchroniczna, można dla czytelności użyć
-          await w niej.
-        Obsługę Promise<T> można rozwiązać na 2 sposoby: z await oraz then().
-        await <- Pauzuje wykonanie funkcji async, aż zostanie wykonany kod w innej funkcji.
-    */
     async exportToPdf(): Promise<void> {
         if (!this.scanResult)
             return;
@@ -171,16 +149,6 @@ export class ReviewComponent implements OnInit
         );
         pdf.save(this.pdfFilename);
         this.isLoading = false;
-        /*
-            this.pdfService.generateCodeReviewPdf(
-                this.scanResult,
-                this.sortedIssueList,
-                'canvas[baseChart]')
-            .then(pdf => {
-                pdf.save('code-review-report.pdf');
-                this.isLoading = false; // wyłącz spinner po zakończeniu
-            }).
-        */
     }
 
     toggleIssue(issue: IssueModel) {

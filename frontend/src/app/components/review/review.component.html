@@ -148,18 +148,6 @@
                             @for (issue of pagedIssues; track issue.issueDescription + issue.lineNumber) {
                                 <tr class="table-tab" (click)="toggleIssue(issue)">
                                     <td class="severity-col">
-                                        <!--
-                                        <span [ngClass]="{
-                                            'text-black-50': issue.severity === 'LOW',
-                                            'text-warning': issue.severity === 'MEDIUM',
-                                            'text-danger': issue.severity === 'CRITICAL'
-                                        }">
-                                        <span [ngStyle]="
-                                            issue.severity === 'LOW' ? { color: '#834e87' } :
-                                            issue.severity === 'MEDIUM' ? { color: '#dd7c15' } :
-                                            issue.severity === 'CRITICAL' ? { color: '#dd2f15' } :
-                                        {}">
-                                        -->
                                         <span [ngStyle]="{ color: severityColors[issue.severity] || '#000' }">
                                         <strong>
                                             {{

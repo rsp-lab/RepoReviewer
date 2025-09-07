@@ -9,7 +9,6 @@ import { MainPageComponent } from './main-page.component';
 describe('MainPageComponent', () => {
     let component: MainPageComponent;
     let fixture: ComponentFixture<MainPageComponent>;
-    // Partial<> <- Wszystkie pola i metody typu T są opcjonalne, TypeScript nie będzie narzekał jak nie znajdzie
     let codeReviewService: Partial<CodeReviewService>;
     let navigationService: Partial<NavigationService>;
 
@@ -29,7 +28,6 @@ describe('MainPageComponent', () => {
     };
 
     beforeEach(() => {
-        // Mockujemy tylko niezbędne metody, serwisy są Partial<>
         codeReviewService = { sendRepositoryUrlToReview: jasmine.createSpy('sendRepositoryUrlToReview') };
         navigationService = { executeNavigation: jasmine.createSpy('executeNavigation') };
 
@@ -60,15 +58,12 @@ describe('MainPageComponent', () => {
 
     describe('reviewRepository()', () => {
         it('should call sendRepositoryUrlToReview() and navigate on success', () => {
-            // of(mockScanResult) jest wykonywane synchronicznie, więc od razu wykona finalize().
             (codeReviewService.sendRepositoryUrlToReview as jasmine.Spy)
                 .and.returnValue(of(mockScanResult));
 
             component.reviewRepository();
 
-            // Ponieważ działa to synchronicznie isLoading tutaj zawsze jest false po finalize().
             expect(component.isLoading).toBe(false);
-            // Sprawdź, czy sendRepositoryUrlToReview został wywołany z konkretnymi argumentami
             expect(codeReviewService.sendRepositoryUrlToReview).toHaveBeenCalledWith(component.repoInput);
             expect(navigationService.executeNavigation).toHaveBeenCalledWith(
                 '/review',

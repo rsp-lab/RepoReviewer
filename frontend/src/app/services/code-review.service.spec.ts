@@ -40,17 +40,14 @@ describe('CodeReviewService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            // Dzięki provideHttpClientTesting mockujemy klienta http.
             providers: [ CodeReviewService, provideHttpClient(), provideHttpClientTesting() ]
         });
 
-        // Wstrzykuje instację serwisu z kontenera zależności
         service = TestBed.inject(CodeReviewService);
         httpMock = TestBed.inject(HttpTestingController);
     });
 
     afterEach(() => {
-        // Sprawdź, czy wszystkie requesty zostały przechwycone i obsłużone w teście
         httpMock.verify();
     });
 
@@ -61,16 +58,10 @@ describe('CodeReviewService', () => {
             expect(result).toEqual(mockScanResult);
         });
 
-        /*
-            expectOne <- znajdź dokładnie jeden request wysłany na url, jeśli nie to wywal test.
-            Czyli łapiesz tutaj request wysłany na url i sprawdź, czy metoda serwisu faktycznie wysłała
-              POST z odpowiednim body.
-        */
         const req = httpMock.expectOne('http://localhost:8080/scan');
         expect(req.request.method).toBe('POST');
         expect(req.request.body).toEqual(gitRepo);
 
-        // Udaje, że serwer odpowiedział z danymi z parametru i przekazuje do subscribe wyżej w teście.
         req.flush(mockScanResult);
     });
 

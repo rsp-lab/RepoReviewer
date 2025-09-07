@@ -117,9 +117,8 @@ hr.pdf-line {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     border-bottom: 1px var(--color-secondary-super-light);
-    overflow: hidden; /* żeby zaokrąglenie działało także na thead/tbody */
+    overflow: hidden;
 }
-/* Brutalne rozwiązanie, aby pokolorować tabelę, bo jest konflikt z Bootstrap */
 .table tbody tr.table-tab, .table tbody tr.table-tab td {
     background-color: var(--color-background-light);
     border: 0 transparent;
@@ -150,7 +149,7 @@ textarea.text-field:focus {
     color: var(--color-secondary-dark);
     background: var(--color-secondary-super-light);
     border: 2px solid #9b2ae8;
-    box-shadow: 0 0 0; /* wyłącz focus z przeglądarki */
+    box-shadow: 0 0 0;
 }
 textarea.text-field::placeholder {
     color: var(--color-secondary);
@@ -250,7 +249,7 @@ button.btn-extra:disabled {
     text-align: center;
 
     color: var(--color-secondary-dark);
-    background: var(--color-secondary-super-light); /* kolor nieaktywnego */
+    background: var(--color-secondary-super-light);
     border: 1px solid var(--color-secondary);
     border-radius: 8px;
 
@@ -261,10 +260,6 @@ button.btn-extra:disabled {
 .btn-radio-mode:hover {
     filter: brightness(1.15);
 }
-/*
-    Kiedy radio button jest zaznaczony (wizualnie jest ukryty) to zmień wygląd elementu bezpośrednio
-      obok po nim (czyli label).
-*/
 .btn-check:checked + .btn-radio-mode {
     color: var(--color-text);
     background: linear-gradient(to right, var(--color-intermediary), var(--color-secondary));
@@ -274,9 +269,9 @@ button.btn-extra:disabled {
 .stat-line {
     margin-bottom: 8px;
     display: flex;
-    align-items: center; /* wyśrodkowanie w pionie */
+    align-items: center;
     gap: 10px;
-    font-size: 1.2rem; /* relatywnie do html */
+    font-size: 1.2rem;
 }
 @media (max-width: 1280px) {
     .stat-line {

@@ -6,19 +6,12 @@ describe('AppComponent', () => {
     let fixture: ComponentFixture<AppComponent>;
 
     beforeEach(async () => {
-        /*
-            TestBed <- środowisko testowe Angulara dla komponentów. Angular kompiluje
-              HTML i CSS w runtime podczas testów.
-        */
-        // Importuje komponenty standalone bezpośrednio:
         await TestBed.configureTestingModule({
             imports: [AppComponent]
         }).compileComponents();
 
         fixture = TestBed.createComponent(AppComponent);
-        // Wydobywa instancję komponentu
         component = fixture.componentInstance;
-        // Uruchamia cykl życia ngOnInit(), ngAfterViewInit()
         fixture.detectChanges();
     });
 

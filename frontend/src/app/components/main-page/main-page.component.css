@@ -15,7 +15,6 @@
 
 .fade-gradient-text {
     background: linear-gradient(90deg, var(--color-primary-light), var(--color-secondary), var(--color-extra));
-    /* Przytnij tło do kształtu liter, sam tekst liter przeźroczysty */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;

@@ -53,13 +53,6 @@
                         <div class="pt-3 px-3">
                             <label class="form-label"><strong>Mode selection:</strong></label>
                             <div class="d-flex gap-2 mt-2">
-                                <!--
-                                    .btn-check <-- Bootstrapowy styl, który go ukrywa w widoku.
-                                    <label> udaje przycisk, ma obramowanie, tekst w środku itd.
-                                    <label class="btn-btn-radio-mode" for="..."> <-- działa jako wizualny przycisk,
-                                      przypięty do input przez for="id". Kliknięcie w label zaznacza odpowiadający
-                                      input.
-                                -->
                                 <input type="radio" class="btn-check" name="mode" id="onePrompt" autocomplete="off"
                                        [(ngModel)]="repoInput.mode" value="one_prompt">
                                 <label class="btn-radio-mode" for="onePrompt">One prompt</label>

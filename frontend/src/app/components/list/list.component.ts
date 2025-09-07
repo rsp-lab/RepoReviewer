@@ -91,7 +91,6 @@ export class ListComponent implements OnInit
                             next: (result: ScanEntryModel[]) => {
                                 this.handleFetchSuccess(result);
 
-                                // Przywróć poprzednią stronę, jeśli to możliwe
                                 if (previousPage > this.totalPages)
                                     this.currentPage = this.totalPages;
                                 else

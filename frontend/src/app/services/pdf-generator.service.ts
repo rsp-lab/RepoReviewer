@@ -26,7 +26,6 @@ export class PdfGeneratorService
         const pdfHeight = pdf.internal.pageSize.getHeight() - 2 * margin;
         let yOffset = margin;
 
-        // Funkcje pomocnicze
         const createTempDiv = (html: string): HTMLDivElement => {
             const tempDiv = document.createElement('div');
             tempDiv.style.width = '800px';
@@ -162,9 +161,7 @@ export class PdfGeneratorService
 
             pdf.setFontSize(fontSize);
 
-            // Przewidujemy wysokość issue (w przybliżeniu)
             const valueX = margin + extraLeftMargin;
-            // Szerokość dostępna do prawej krawędzi
             const valueWidth = pdf.internal.pageSize.getWidth() - valueX - margin;
 
             const descriptionLines = pdf.splitTextToSize(issue.issueDescription, valueWidth);

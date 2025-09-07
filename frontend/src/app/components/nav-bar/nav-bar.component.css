@@ -10,7 +10,7 @@
 
 .logo {
     display: flex;
-    align-items: center; /* vertical alignment */
+    align-items: center;
 }
 .text-logo, .text-logo-dark {
     margin-left: 10px;

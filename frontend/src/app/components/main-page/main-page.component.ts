@@ -11,17 +11,11 @@ import { NavBarComponent } from '../nav-bar/nav-bar.component';
 
 @Component({
     standalone: true,
-    /*
-        Komponentu można używać w innym przez znacznik <app-main-page></app-main-page>.
-        Konwencja, aby zaczynać od app i nie kolidować ze znacznikami html, technicznie nie potrzebny,
-          jeśli tworzysz komponent tylko po to, żeby używać go w RouterOutlet.
-    */
     selector: 'app-main-page',
     imports: [ FormsModule, NgOptimizedImage, LoadingModalComponent, NavBarComponent ],
     templateUrl: './main-page.component.html',
     styleUrl: './main-page.component.css'
 })
-// export <- dzięki temu słowu można to zaimportować w innych plikach, nie tylko używać w tym samym
 export class MainPageComponent implements OnInit, OnDestroy
 {
     repoInput: GitRepoModel = {
@@ -37,10 +31,6 @@ export class MainPageComponent implements OnInit, OnDestroy
     isShowingSettings: boolean = false;
     isLoading = false;
 
-    /*
-        Konwencja, na końcu jest $, co oznacza, że to Observable/Subject, czyli strumień,
-          a nie standardowa flaga czy coś.
-    */
     private readonly destroyed$ = new Subject<void>();
 
     constructor(private readonly navigation: NavigationService,
@@ -48,12 +38,7 @@ export class MainPageComponent implements OnInit, OnDestroy
 
     ngOnInit() {
         let index = 0;
-        /*
-            Tworzy observable/stream emitujący liczby {0, 1, 2, ...} co 2,5 sekundy.
-            takeUntil -> Subskrybuj się do strumienia, dopóki destroyed$ nie wyemituje czegoś.
-        */
         interval(2500)
-            // .pipe <- tworzy nowy strumień, pozwala używać operacji filter, map
             .pipe(takeUntil(this.destroyed$))
             .subscribe(() => {
                 this.isFading = true;
@@ -66,16 +51,12 @@ export class MainPageComponent implements OnInit, OnDestroy
     }
 
     ngOnDestroy() {
-        /*
-            Anuluje subskrypcję. Nie ma wycieków pamięci, gdy mimo zniszczonego komponentu
-              subskrypcje nadal pozostaną aktywne.
-        */
-        this.destroyed$.next(); // wysyła wartość, inaczej sygnalizuje coś wszystkim z takeUntil
-        this.destroyed$.complete(); // sygnalizuje, że strumień nie będzie już emitował kolejnych wartości
+        this.destroyed$.next();
+        this.destroyed$.complete();
     }
 
     reviewRepository(): void {
-        this.errorMessage = ''; // Wyczyść poprzedni error
+        this.errorMessage = '';
         this.isLoading = true;
 
         this.codeReviewService.sendRepositoryUrlToReview(this.repoInput)
