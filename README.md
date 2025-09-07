@@ -26,8 +26,9 @@ The application helps developers gain deep insights into their work and assist t
 </div>
 
 ### RepoReviewer:
-- Utilizes caching for repeated reviews within short timeframes.
 - Leverages configurable AI models to provide intelligent, context-aware suggestions for code improvement.
+- Utilizes caching for repeated reviews within short timeframes.
+- Allows storing code reviews in a database, maintaining a history of past analyses.
 - Offers two distinct modes:
   - _One Prompt_: Ideal for analyzing architectural decisions, class relationships, and overall system design.
   - _Prompt Per Class_: Sends one class per prompt to the AI for review. Best suited for detailed, isolated analysis of individual classes.
