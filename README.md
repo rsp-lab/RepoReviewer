@@ -1,4 +1,4 @@
-# RepoReviewer - GitHub Repositories Analysis.
+# RepoReviewer - GitHub Repositories Analysis
 
 **RepoReviewer** is an advanced web-designed tool to perform automated and AI-driven code reviews for public GitHub repositories.
 It takes a repository link, analyzes the entire codebase, provides improvement suggestions, and generates a comprehensive PDF report.
