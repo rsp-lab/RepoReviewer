@@ -1,0 +1,49 @@
+canvas {
+    max-width: 330px;
+    max-height: 330px;
+    cursor: pointer;
+}
+
+.summary-text {
+    font-family: var(--font-main), serif;
+    font-size: calc(1rem + 2px);
+
+    white-space: pre-wrap;
+
+    text-align: justify;
+}
+
+td.filePath-col, th.filePath-col {
+    max-width: 160px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+td.severity-col, th.severity-col {
+    width: 120px;
+    text-align: center;
+}
+td.description-col, th.description-col {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.issue-detail-content {
+    padding: 0;
+    max-height: 0;
+
+    color: var(--color-text-dark);
+    background-color: var(--color-text);
+
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    overflow: hidden;
+}
+.issue-detail-content.show {
+    max-height: 300px;
+}
+.issue-detail-content-column {
+    width: 180px;
+    vertical-align: top;
+}

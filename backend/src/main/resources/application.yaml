@@ -1,0 +1,122 @@
+logging:
+  pattern:
+    console: "%clr(%d{HH:mm:ss:SSS}){faint} | %clr(${LOG_LEVEL  _PATTERN:%-5p}) | %clr(%-40.40logger{39}) | %msg%n"
+  level:
+    pl.radek: DEBUG
+    de.flapdoodle.embed.mongo.spring: WARN
+  # for emojis:
+  charset:
+    console: UTF-8
+
+app:
+  base-dir: repositories
+  file-extensions-white-list:
+    - "java"
+    - "kt"
+    - "kts"
+    - "js"
+    - "ts"
+    - "tsx"
+
+spring:
+  data:
+    mongodb:
+      port: 27017
+      database: db-code-reviews
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+
+de:
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 7.0.5
+
+ai:
+  api-key:
+  model: gemini-2.0-flash-lite
+  prompt:
+    one-prompt: >
+      You're expert code reviewer and technical architect with extensive experience.
+      Analyze the source code provided below and generate professional report.
+      Be meticulous.
+
+      Focus on architectural and design patterns, code organization and structure, component relationships,
+        code modularity and reusability, separation of concerns, error handling patterns, testing approach, configuration management.
+      Highlight any security concerns (e.g. password handling, data protection measures, api security).
+      Point out security best practices compliance, dependency vulnerabilities, code injection.
+      Include if needed performance bottlenecks, optimization suggestions.
+      Suggest improvements and refactoring ideas.
+
+      In JSON array response:
+      
+      The summary field must contain at least 10 sentences and be structured into 3 paragraphs:
+      1. High-level overview of the project, main purpose and functionality, architecture design.
+      2. Core technologies, primary programming languages, frameworks and libraries, testing frameworks, database systems, external services and APIs.
+      3. Overall suggestions, overall architecture enhancements, scalability suggestions, code quality assessment, key findings and recommendations.
+      Write a few words about each of the points mentioned above.
+      Please make sure summary contains 3 paragraphs and each paragraph is separated in a new line.
+      
+      
+      Field issues should contain as many issues as you can find!
+      Field suggestedAction may contain max 3 sentences.
+      Field issueDescription response may contain max 3 sentences.
+      Field severity may only take values: LOW, MEDIUM, CRITICAL.
+      Field filePath contains the directory path to the file (e.g. src/main/java/SomeClass.class).
+      Field filePath starts from the same directory for all issues. If you find src directory start from that directory.
+
+    prompt-per-class: >
+      You're expert code reviewer and technical architect with extensive experience.
+      Analyze the source code provided below and generate professional report.
+      Be meticulous.
+      
+      Identify bad practices and anti-patters.
+      Focus on code organization and structure, clean code.
+      Highlight any security concerns (e.g. password handling, data protection measures, api security).
+      Comment on potential problems witch scalability, maintainability, or testability.
+      Suggest improvements and refactoring ideas.
+      
+      In JSON array response:
+      
+      Field summary should be empty.
+      Field issues should contain as many issues as you can find!
+      Field suggestedAction may contain max 3 sentences.
+      Field issueDescription response may contain max 3 sentences.
+      Field severity may only take values: LOW, MEDIUM, CRITICAL.
+      Field filePath contains the directory path to the file (e.g. src/main/java/SomeClass.class).
+      Field filePath starts from the same directory for all issues. If you find src directory start from that directory.
+  issue-schema-json: >
+    {
+      "type": "object",
+      "properties": {
+        "summary": { "type": "string" },
+        "issues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "filePath": { "type": "string" },
+              "lineNumber": { "type": "integer" },
+              "severity": {
+                "type": "string",
+                "enum": ["LOW", "MEDIUM", "CRITICAL"]
+              },
+              "issueDescription": { "type": "string" },
+              "suggestedAction": { "type": "string" }
+            },
+            "required": ["filePath", "lineNumber", "severity", "issueDescription", "suggestedAction"]
+          }
+        }
+      },
+      "required": ["summary", "issues"]
+    }
+
+#       ## 1. Overview of the project:
+#      Put here high-level overview of the project, main purpose and functionality, architecture design.
+#      ## 2. Core technologies:
+#      Put here primary programming languages, frameworks and libraries, database systems, external services and APIs.
+#      ## 3. Development Tools, testing frameworks:
+#      Put here information on build tools and scripts etc.
+#      ## 4. Overall suggestions:
+#      Put here overall architecture enhancements, scalability suggestions, code quality assessment, key findings and recommendations.

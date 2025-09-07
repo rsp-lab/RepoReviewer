@@ -1,0 +1,290 @@
+@font-face {
+    font-family: 'Sora';
+    src: url('/fonts/Sora-Regular.ttf') format("truetype");
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Rocko';
+    src: url('/fonts/RockoFLF.ttf') format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Rocko Ultra';
+    src: url('/fonts/RockoUltraFLF.ttf') format("truetype");
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Regular.ttf') format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+:root {
+    --font-main: 'Lato';
+    --font-rounded: 'Rocko', sans-serif;
+    --font-rounded-bold: 'Rocko Ultra', sans-serif;
+    --font-tech: 'Sora', sans-serif;
+
+    --color-primary: #881100;
+    --color-primary-dark: #550c00;
+    --color-primary-light: #dd2f15;
+    --color-secondary: #9b2ae8;
+    --color-secondary-super-light: #efd0ff;
+    --color-secondary-light: #ca81fc;
+    --color-secondary-dark: #6e12ad;
+    --color-intermediary: #e477ce;
+    --color-extra: #ff8a00;
+    --color-text: #ffffff;
+    --color-text-dark: #000000;
+
+    --color-background-light: #fcf2ff;
+    --color-alert-background: #ffbbb1;
+    --color-alert-text: #881100;
+}
+
+html {
+    /* Scrollbar space always visible */
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-secondary) white;
+}
+
+body {
+    font-family: var(--font-main), serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-rounded-bold), serif;
+}
+h1.line-height {
+    line-height: 1.4;
+}
+
+p {
+    font-family: var(--font-tech), serif;
+}
+
+hr {
+    margin: auto;
+    width: 70%;
+    border-radius: 4px;
+    border: 1px solid var(--color-secondary-dark);
+    opacity: 0.5;
+}
+hr.wide-line {
+    width: 90%;
+}
+hr.pdf-line {
+    width: 100%;
+    border-color: var(--color-text-dark);
+}
+
+.text-navigation {
+    width: 140px;
+    color: var(--color-text);
+    font-size: 26px;
+    text-align: center;
+}
+
+.background-media {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+}
+.content {
+    position: relative;
+}
+
+.card {
+    border: 3px solid var(--color-secondary-super-light);
+    border-color: var(--color-secondary-super-light);
+}
+.alert {
+    font-size: 18px;
+    font-family: var(--font-tech), serif;
+    color: var(--color-alert-text);
+    background: var(--color-alert-background);
+    border: 2px solid var(--color-alert-text);
+}
+
+.table {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom: 1px var(--color-secondary-super-light);
+    overflow: hidden; /* żeby zaokrąglenie działało także na thead/tbody */
+}
+/* Brutalne rozwiązanie, aby pokolorować tabelę, bo jest konflikt z Bootstrap */
+.table tbody tr.table-tab, .table tbody tr.table-tab td {
+    background-color: var(--color-background-light);
+    border: 0 transparent;
+}
+.table tbody tr.table-tab:hover, .table tbody tr.table-tab:hover td {
+    background-color: var(--color-secondary-super-light);
+    cursor: pointer;
+}
+.table th {
+    color: var(--color-text);
+    border-bottom: 2px solid black;
+    background: var(--color-secondary);
+    cursor: pointer;
+
+    text-align: center;
+}
+
+textarea.text-field {
+    font-size: 18px;
+    font-family: var(--font-tech), serif;
+    color: var(--color-secondary-dark);
+    background: var(--color-secondary-super-light);
+    border: 2px solid #e4c6fb;
+
+    resize: none;
+}
+textarea.text-field:focus {
+    color: var(--color-secondary-dark);
+    background: var(--color-secondary-super-light);
+    border: 2px solid #9b2ae8;
+    box-shadow: 0 0 0; /* wyłącz focus z przeglądarki */
+}
+textarea.text-field::placeholder {
+    color: var(--color-secondary);
+    opacity: 0.8;
+}
+
+button.btn-default {
+    padding: 0 12px;
+    border: 1px solid var(--color-secondary);
+    border-radius: 8px;
+    background: transparent linear-gradient(to right, var(--color-intermediary), var(--color-secondary));
+    background-size: 100% auto;
+
+    color: var(--color-text);
+    font-size: 20px;
+    font-family: var(--font-rounded), serif;
+    text-align: center;
+    text-shadow: 2px 2px 3px var(--color-secondary-dark);
+
+    display: inline-block;
+    height: 50px;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+button.btn-default:hover {
+    border: 1px solid var(--color-secondary);
+    color: var(--color-text);
+    filter: brightness(1.15);
+}
+button.btn-default:active {
+    color: var(--color-text);
+    filter: brightness(0.9);
+}
+button.btn-default:disabled {
+    color: var(--color-secondary-dark);
+    background: transparent;
+    text-shadow: none;
+}
+
+button.btn-secondary {
+    background: transparent;
+
+    padding: 0 12px;
+    border: 2px solid var(--color-text);
+    border-radius: 8px;
+    background-size: 100% auto;
+    height: 50px;
+    transition: all 0.3s ease;
+}
+button.btn-secondary:hover {
+    background: var(--color-secondary);
+    border: 2px solid var(--color-secondary);
+    filter: brightness(1.15);
+}
+button.btn-secondary:active {
+    background: var(--color-secondary-dark) !important;
+    border: 2px solid var(--color-secondary-dark) !important;
+    filter: brightness(0.9);
+}
+button.btn-secondary:disabled {
+    background: transparent;
+    border: 2px solid var(--color-secondary-light);
+    opacity: 0.5;
+}
+
+button.btn-extra {
+    background: transparent;
+
+    padding: 0 12px;
+    border: 2px solid var(--color-text-dark);
+    border-radius: 8px;
+    background-size: 100% auto;
+    height: 50px;
+    transition: all 0.3s ease;
+}
+button.btn-extra:hover {
+    background: var(--color-primary-light);
+    border: 2px solid var(--color-primary);
+    filter: brightness(1.15);
+}
+button.btn-extra:active {
+    background: var(--color-primary-dark) !important;
+    border: 2px solid var(--color-primary-dark) !important;
+    filter: brightness(0.9);
+}
+button.btn-extra:disabled {
+    background: transparent;
+    border: 2px solid var(--color-primary-light);
+    opacity: 0.5;
+}
+
+.btn-radio-mode {
+    padding: 0.5rem 1rem;
+    flex: 1;
+
+    font-family: var(--font-rounded), serif;
+    text-align: center;
+
+    color: var(--color-secondary-dark);
+    background: var(--color-secondary-super-light); /* kolor nieaktywnego */
+    border: 1px solid var(--color-secondary);
+    border-radius: 8px;
+
+    transition: all 0.3s ease;
+    user-select: none;
+    cursor: pointer;
+}
+.btn-radio-mode:hover {
+    filter: brightness(1.15);
+}
+/*
+    Kiedy radio button jest zaznaczony (wizualnie jest ukryty) to zmień wygląd elementu bezpośrednio
+      obok po nim (czyli label).
+*/
+.btn-check:checked + .btn-radio-mode {
+    color: var(--color-text);
+    background: linear-gradient(to right, var(--color-intermediary), var(--color-secondary));
+    text-shadow: 2px 2px 3px var(--color-secondary-dark);
+}
+
+.stat-line {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center; /* wyśrodkowanie w pionie */
+    gap: 10px;
+    font-size: 1.2rem; /* relatywnie do html */
+}
+@media (max-width: 1280px) {
+    .stat-line {
+        font-size: 1.0rem;
+    }
+}
+@media (max-width: 768px) {
+    .stat-line {
+        font-size: 0.9rem;
+    }
+}

@@ -1,0 +1,89 @@
+<app-nav-bar navbarClass="navbar-no-background" logoClass="text-logo-dark">
+    <button class="btn btn-extra" (click)="navigateTo('/list')">
+        <img ngSrc="/images/icon_menu_dark.png" alt="" width="32" height="32">
+    </button>
+</app-nav-bar>
+
+<div class="pt-1">
+    <video autoplay muted loop playsinline class="background-media">
+        <source src="/videos/background_video.webm" type="video/webm">
+        Video not supported
+    </video>
+    <!-- <img ngSrc="/images/background.png" class="background-media" width="1585" height="900" alt="No Background"> -->
+
+    <div class="content">
+        <div class="my-5 text-center">
+            <h1 class="entry-text">
+                Smarter coding starts here! <br>
+                Get immediate insights into your <br>
+                <span class="fade-gradient-text" [class.hidden]="isFading">{{ currentPhrase }}</span>
+            </h1>
+
+            <div class="col-5 mx-auto">
+                <p class="sub-text my-5">
+                    RepoReviewer supports Java, Kotlin, JavaScript, TypeScript with live analysis and user-friendly
+                    reports.
+                </p>
+            </div>
+
+            <div class="card card-body my-2 mx-auto">
+                <form (ngSubmit)="reviewRepository()" #repoForm="ngForm">
+                    <div class="form-group mb-2">
+                        <textarea class="form-control text-field" [(ngModel)]="repoInput.repoUrl"
+                                  id="repoUrl"
+                                  name="repoUrl"
+                                  placeholder="Paste the public repository link here to spot issues and refine your projects now!"
+                                  rows="2"
+                                  required
+                                  pattern="^https://github\.com/[a-zA-Z0-9-_]+/[a-zA-Z0-9-_]+$"
+                                  #repoUrl="ngModel">
+                        </textarea>
+                    </div>
+
+                    <hr class="wide-line my-3"/>
+
+                    <div class="d-flex justify-content-center gap-2">
+                        <button type="submit" class="btn btn-default px-4" [disabled]="repoForm.invalid">Let's go with RepoReviewer</button>
+                        <button type="button" class="btn btn-default" (click)="toggleSettings()">
+                            <img ngSrc="/images/icon_settings.png" alt="" width="32" height="32">
+                        </button>
+                    </div>
+
+                    @if (isShowingSettings) {
+                        <div class="pt-3 px-3">
+                            <label class="form-label"><strong>Mode selection:</strong></label>
+                            <div class="d-flex gap-2 mt-2">
+                                <!--
+                                    .btn-check <-- Bootstrapowy styl, który go ukrywa w widoku.
+                                    <label> udaje przycisk, ma obramowanie, tekst w środku itd.
+                                    <label class="btn-btn-radio-mode" for="..."> <-- działa jako wizualny przycisk,
+                                      przypięty do input przez for="id". Kliknięcie w label zaznacza odpowiadający
+                                      input.
+                                -->
+                                <input type="radio" class="btn-check" name="mode" id="onePrompt" autocomplete="off"
+                                       [(ngModel)]="repoInput.mode" value="one_prompt">
+                                <label class="btn-radio-mode" for="onePrompt">One prompt</label>
+
+                                <input type="radio" class="btn-check" name="mode" id="promptPerClass" autocomplete="off"
+                                       [(ngModel)]="repoInput.mode" value="prompt_per_class" checked>
+                                <label class="btn-radio-mode" for="promptPerClass">Prompt per class</label>
+                            </div>
+                        </div>
+                    }
+
+                    @if (errorMessage) {
+                        <div class="alert mt-3 mb-0">{{ errorMessage }}</div>
+                    }
+
+                    @if (repoUrl.value && repoUrl.invalid) {
+                        <div class="alert mt-3 mb-0">
+                            Please provide the correct repository url: https://github.com/user/repo
+                        </div>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-loading-modal [isShowing]="isLoading" text="Analyzing repository..."></app-loading-modal>

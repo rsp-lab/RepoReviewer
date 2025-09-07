@@ -1,0 +1,19 @@
+td.date-col, td.repository-col {
+    font-family: var(--font-tech), serif;
+    font-size: calc(1rem + 2px);
+}
+td.date-col, th.date-col {
+    max-width: 110px;
+    text-align: center;
+}
+td.repository-col, th.repository-col {
+    max-width: 300px;
+    white-space: normal;
+    word-break: break-all; /* łamie długie linki */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+td.button-options-col, th.button-options-col {
+    max-width: 60px;
+    text-align: center;
+}

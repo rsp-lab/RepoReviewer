@@ -1,0 +1,29 @@
+.navbar.navbar-background, .navbar.navbar-no-background {
+    font-family: var(--font-rounded), serif;
+}
+.navbar.navbar-background {
+    background-image: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+}
+.navbar.navbar-no-background {
+    background: transparent;
+}
+
+.logo {
+    display: flex;
+    align-items: center; /* vertical alignment */
+}
+.text-logo, .text-logo-dark {
+    margin-left: 10px;
+    font-size: 30px;
+}
+.text-logo {
+    color: var(--color-text);
+}
+.text-logo-dark {
+    color: var(--color-text-dark);
+    transition: color 0.3s ease;
+}
+.text-logo:hover, .text-logo-dark:hover {
+    color: var(--color-extra);
+    transition: color 0.3s ease;
+}

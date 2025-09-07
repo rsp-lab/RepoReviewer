@@ -1,0 +1,14 @@
+<nav class="navbar" [ngClass]="navbarClass">
+    <div class="container d-flex align-items-center justify-content-between flex-nowrap">
+        <a class="navbar-brand" routerLink="/">
+            <div class="logo">
+                <img ngSrc="/images/appIcon.png" alt="App Icon" width="48" height="48" class="me-2">
+                <span class="d-none d-lg-inline" [ngClass]="logoClass"> RepoReviewer </span>
+            </div>
+        </a>
+
+        <div class="d-flex justify-content-center align-items-center gap-2">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</nav>

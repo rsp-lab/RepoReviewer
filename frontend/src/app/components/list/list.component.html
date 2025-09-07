@@ -1,0 +1,87 @@
+<app-nav-bar navbarClass="navbar-background fixed-top" logoClass="text-logo">
+            <button class="btn btn-secondary" [disabled]="currentPage === 1" (click)="currentPage = currentPage - 1">
+                <img ngSrc="/images/icon_arrow_left.png" alt="" width="32" height="32">
+            </button>
+
+            <span class="text-navigation mx-2">Page {{ currentPage }} / {{ totalPages }}</span>
+
+            <button class="btn btn-secondary" (click)="currentPage = currentPage + 1" [disabled]="currentPage === totalPages">
+                <img ngSrc="/images/icon_arrow_right.png" alt="" width="32" height="32">
+            </button>
+
+            <button class="btn btn-secondary" (click)="reloadList()">
+                <img ngSrc="/images/icon_menu.png" alt="" width="32" height="32">
+            </button>
+</app-nav-bar>
+
+<div class="pt-5 mt-4">
+    <!--    <img ngSrc="/images/background.png" class="background-media" width="1585" height="900" alt="No Background">-->
+    <img ngSrc="/images/background_hexagon.svg" class="background-media" width="2560" height="1440" alt="No Background">
+
+    <div class="content">
+        <div class="container mt-4">
+
+            <div class="card mb-4 w-50 mx-auto">
+                <h1 class="my-3 text-center">Code review history</h1>
+            </div>
+
+            <div class="card mb-5">
+                <div class="mt-4 mx-5">
+                    <table class="table mx-auto">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="date-col" (click)="sortByField('scanDateTimeUtc0')">
+                                    @if (sortField === 'scanDateTimeUtc0') {
+                                        @if (sortDirection === 'asc') {
+                                            Review Date&nbsp;&nbsp;<img ngSrc="/images/icon_sort_up.png" alt="↑" width="16"
+                                                                     height="16"/>
+                                        }
+                                        @else {
+                                            Review Date&nbsp;&nbsp;<img ngSrc="/images/icon_sort_down.png" alt="↓" width="16"
+                                                                     height="16"/>
+                                        }
+                                    }
+                                    @else {
+                                        Review Date
+                                    }
+                                </th>
+                                <th scope="col" class="repository-col" (click)="sortByField('repositoryUrl')">
+                                    @if (sortField === 'repositoryUrl') {
+                                        @if (sortDirection === 'asc') {
+                                            Repository Link&nbsp;&nbsp;<img ngSrc="/images/icon_sort_up.png" alt="↑" width="16"
+                                                                     height="16"/>
+                                        }
+                                        @else {
+                                            Repository Link&nbsp;&nbsp;<img ngSrc="/images/icon_sort_down.png" alt="↓" width="16"
+                                                                     height="16"/>
+                                        }
+                                    }
+                                    @else {
+                                        Repository Link
+                                    }
+                                </th>
+                                <th scope="col" class="button-options-col">
+                                    Delete review
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (scanEntry of pagedScanEntries; track scanEntry.id) {
+                                <tr class="table-tab align-middle">
+                                    <td class="date-col">{{ scanEntry.scanDateTimeUtc0.split('UTC')[0] }}</td>
+                                    <td class="repository-col" (click)="showDetails(scanEntry)">{{ scanEntry.repositoryUrl }}</td>
+                                    <td class="button-options-col">
+                                        <button class="btn btn-default" (click)="deleteEntry(scanEntry)">
+                                            <img ngSrc="/images/icon_bin.png" alt="" width="32" height="32">
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

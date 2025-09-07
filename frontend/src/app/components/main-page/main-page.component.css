@@ -1,0 +1,33 @@
+.content {
+    user-select: none;
+    position: relative;
+}
+
+.entry-text {
+    font-family: var(--font-rounded-bold), serif;
+    font-size: 3.8rem;
+    line-height: 1.4;
+}
+.sub-text {
+    font-family: var(--font-tech), serif;
+    font-size: 1.25rem;
+}
+
+.fade-gradient-text {
+    background: linear-gradient(90deg, var(--color-primary-light), var(--color-secondary), var(--color-extra));
+    /* Przytnij tło do kształtu liter, sam tekst liter przeźroczysty */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+
+    transition: opacity 0.5s ease-in-out;
+    opacity: 1;
+}
+.fade-gradient-text.hidden {
+    opacity: 0;
+}
+
+.card {
+    max-width: 500px;
+    border: 2px solid var(--color-secondary-super-light);
+}

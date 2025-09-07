@@ -1,0 +1,211 @@
+<app-nav-bar navbarClass="navbar-background fixed-top" logoClass="text-logo">
+    <button class="btn btn-secondary" (click)="toggleFullExpand()" title="Toggle collapse/uncollapse of all issues">
+        <img ngSrc="/images/icon_expand.png" alt="" width="32" height="32">
+    </button>
+
+    <button class="btn btn-secondary" [disabled]="currentPage === 1" (click)="currentPage = currentPage - 1">
+        <img ngSrc="/images/icon_arrow_left.png" alt="" width="32" height="32">
+    </button>
+
+    <span class="text-navigation mx-2">Page {{ currentPage }} / {{ totalPages }}</span>
+
+    <button class="btn btn-secondary" (click)="currentPage = currentPage + 1" [disabled]="currentPage === totalPages">
+        <img ngSrc="/images/icon_arrow_right.png" alt="" width="32" height="32">
+    </button>
+
+    <button class="btn btn-secondary" (click)="exportToPdf()" title="Exports to PDF report">
+        <img ngSrc="/images/icon_exam.png" alt="" width="32" height="32">
+    </button>
+
+    <button class="btn btn-secondary" (click)="navigateTo('/list')">
+        <img ngSrc="/images/icon_menu.png" alt="" width="32" height="32">
+    </button>
+</app-nav-bar>
+
+<div class="pt-5 mt-4">
+    <!--    <img ngSrc="/images/background.png" class="background-media" width="1585" height="900" alt="No Background">-->
+    <img ngSrc="/images/background_hexagon.svg" class="background-media" width="2560" height="1440" alt="No Background">
+
+    <div class="content">
+        <div class="container mt-4">
+            <div class="d-flex flex-wrap gap-4 mx-5 mb-4">
+                <div class="card flex-fill">
+                    <h1 class="mt-4 text-center">Code review report</h1>
+
+                    <hr class="wide-line my-3 mx-auto"/>
+
+                    @if (scanResult) {
+                        <div class="d-flex justify-content-center">
+                            <div>
+                                <div class="stat-line">
+                                    <img ngSrc="/images/stat_web.png" alt="" width="32" height="32">
+                                    <strong>Repository URL:</strong> {{ scanResult.repositoryUrl }}
+                                </div>
+                                <div class="stat-line">
+                                    <img ngSrc="/images/stat_calendar.png" alt="" width="32" height="32">
+                                    <strong>Date (UTC+00):</strong> {{ scanResult.scanDateTimeUtc0.split('UTC')[0] }}
+                                </div>
+                                <div class="stat-line">
+                                    <img ngSrc="/images/stat_file.png" alt="" width="32" height="32">
+                                    <strong>Total number of analyzed files:</strong> {{ scanResult.analyzedFilesCount }}
+                                </div>
+                                <div class="stat-line">
+                                    <img ngSrc="/images/stat_lightning.png" alt="" width="32" height="32">
+                                    <strong>Total issues detected:</strong> {{ scanResult.totalIssueCount }}
+                                </div>
+                                <div class="stat-line">
+                                    <img ngSrc="/images/stat_timer.png" alt="" width="32" height="32">
+                                    <strong>Review time:</strong> {{ scanResult.codeReviewTimeInMs }} ms
+                                </div>
+                                <div class="stat-line">
+                                    <img ngSrc="/images/stat_data.png" alt="" width="32" height="32">
+                                    <strong>Repository size:</strong> {{ scanResult.totalRepoSizeInKB }} KB
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="card flex-fill">
+                    @if (doughnutChartData) {
+                        <div class="d-flex justify-content-center my-3">
+                            <canvas baseChart [data]="doughnutChartData"
+                                    [options]="doughnutChartOptions"
+                                    type="doughnut"></canvas>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            @if (scanResult?.summary?.trim()) {
+                <div class="card flex-fill mx-5 mb-4">
+                    <div class="summary-text my-3 mx-5">
+                        <h4>Repository summary: </h4>{{ scanResult?.summary }}
+                    </div>
+                </div>
+            }
+            @else {
+                <div class="card flex-fill mx-5 mb-4">
+                    <div class="summary-text my-3 mx-5">
+                        <p>Report generated using the 'prompt per class' mode. Use a different mode to display more detailed information here.</p>
+                    </div>
+                </div>
+            }
+
+            <div class="card mb-5">
+                <div class="mt-4 mx-5">
+                    <table class="table mx-auto">
+                        <thead>
+                            <tr>
+                                <th class="severity-col" (click)="sortByField('severity')">
+                                    @if (sortField === 'severity') {
+                                        @if (sortDirection === 'asc') {
+                                            Severity&nbsp;&nbsp;<img ngSrc="/images/icon_sort_up.png" alt="↑" width="16"
+                                                                     height="16"/>
+                                        }
+                                        @else {
+                                            Severity&nbsp;&nbsp;<img ngSrc="/images/icon_sort_down.png" alt="↓" width="16"
+                                                                     height="16"/>
+                                        }
+                                    }
+                                    @else {
+                                        Severity
+                                    }
+                                </th>
+                                <th class="filePath-col" (click)="sortByField('filePath')">
+                                    @if (sortField === 'filePath') {
+                                        @if (sortDirection === 'asc') {
+                                            File path&nbsp;&nbsp;<img ngSrc="/images/icon_sort_up.png" alt="↑" width="16"
+                                                                      height="16"/>
+                                        }
+                                        @else {
+                                            File path&nbsp;&nbsp;<img ngSrc="/images/icon_sort_down.png" alt="↓" width="16"
+                                                                      height="16"/>
+                                        }
+                                    }
+                                    @else {
+                                        File path
+                                    }
+                                </th>
+                                <th class="description-col" (click)="sortByField('issueDescription')">
+                                    @if (sortField === 'issueDescription') {
+                                        @if (sortDirection === 'asc') {
+                                            Issue description&nbsp;&nbsp;<img ngSrc="/images/icon_sort_up.png" alt="↑"
+                                                                              width="16" height="16"/>
+                                        }
+                                        @else {
+                                            Issue description&nbsp;&nbsp;<img ngSrc="/images/icon_sort_down.png" alt="↓"
+                                                                              width="16" height="16"/>
+                                        }
+                                    }
+                                    @else {
+                                        Issue description
+                                    }
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (issue of pagedIssues; track issue.issueDescription + issue.lineNumber) {
+                                <tr class="table-tab" (click)="toggleIssue(issue)">
+                                    <td class="severity-col">
+                                        <!--
+                                        <span [ngClass]="{
+                                            'text-black-50': issue.severity === 'LOW',
+                                            'text-warning': issue.severity === 'MEDIUM',
+                                            'text-danger': issue.severity === 'CRITICAL'
+                                        }">
+                                        <span [ngStyle]="
+                                            issue.severity === 'LOW' ? { color: '#834e87' } :
+                                            issue.severity === 'MEDIUM' ? { color: '#dd7c15' } :
+                                            issue.severity === 'CRITICAL' ? { color: '#dd2f15' } :
+                                        {}">
+                                        -->
+                                        <span [ngStyle]="{ color: severityColors[issue.severity] || '#000' }">
+                                        <strong>
+                                            {{
+                                                issue.severity === 'LOW' ? 'Minor' :
+                                                issue.severity === 'MEDIUM' ? 'Major' :
+                                                issue.severity === 'CRITICAL' ? 'Critical' :
+                                                issue.severity
+                                            }} </strong>
+                                        </span>
+                                    </td>
+                                    <td class="filePath-col">{{ issue.filePath }}</td>
+                                    <td class="description-col">{{ issue.issueDescription }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="p-0" colspan="11">
+                                        <div class="issue-detail-content" [class.show]="expandedIssues.has(issue)">
+                                            <div class="my-2 mx-5">
+                                                <table>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="issue-detail-content-column"><strong>Line Number:</strong></td>
+                                                        <td>{{ issue.lineNumber }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="issue-detail-content-column"><strong>Description:</strong></td>
+                                                        <td>{{ issue.issueDescription }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="issue-detail-content-column"><strong>Suggested Action:</strong>
+                                                        </td>
+                                                        <td>{{ issue.suggestedAction }}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-loading-modal [isShowing]="isLoading" text="Exporting to pdf..."></app-loading-modal>

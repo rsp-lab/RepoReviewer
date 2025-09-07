@@ -1,0 +1,45 @@
+{
+  "analyzedFilesCount": 3,
+  "totalIssueCount": 5,
+  "issueCountLow": 2,
+  "issueCountMedium": 2,
+  "issueCountCritical": 1,
+  "totalRepoSizeInKB": 2.2,
+  "issues": [
+    {
+      "filePath": "src/main/java/pl/radek/model/BadCalculator.java",
+      "lineNumber": 16,
+      "severity": "CRITICAL",
+      "issueDescription": "The divide method does not handle the case where the divisor is zero",
+      "suggestedAction": "Implement input validation to check if the divisor is zero before performing the division."
+    },
+    {
+      "filePath": "src/main/java/pl/radek/badKotlin.kt",
+      "lineNumber": 10,
+      "severity": "MEDIUM",
+      "issueDescription": "The test class is missing assertions.",
+      "suggestedAction": "Add assertions to the 'someTestMethod' to validate the expected behavior."
+    },
+    {
+      "filePath": "src/main/java/pl/radek/controller/BadController.java",
+      "lineNumber": 23,
+      "severity": "MEDIUM",
+      "issueDescription": "The program attempts to divide 5 by 10, resulting in 0 in integer division.",
+      "suggestedAction": "If the program requires floating-point division, change the return type of the divide method to double and cast the operands to double before division."
+    },
+    {
+      "filePath": "src/main/java/pl/radek/badKotlin.kt",
+      "lineNumber": 5,
+      "severity": "LOW",
+      "issueDescription": "The class name 'SomeBadProjectApplication' suggests this is the main application class.",
+      "suggestedAction": "Rename the class to a more descriptive name."
+    },
+    {
+      "filePath": "src/main/java/pl/radek/model/BadCalculator.java",
+      "lineNumber": 20,
+      "severity": "LOW",
+      "issueDescription": "The variable 'notNeeded' is instantiated but never used.",
+      "suggestedAction": "Remove the instantiation of 'notNeeded' variable."
+    }
+  ]
+}
