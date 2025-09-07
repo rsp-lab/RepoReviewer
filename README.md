@@ -32,8 +32,8 @@ The application helps developers gain deep insights into their work and assist t
 - Offers two distinct modes:
   - _One Prompt_: Ideal for analyzing architectural decisions, class relationships, and overall system design.
   - _Prompt Per Class_: Sends one class per prompt to the AI for review. Best suited for detailed, isolated analysis of individual classes.
-- Is organized into modular architecture with separate **backend** and **frontend** components.
-- Is fully supported by the backed and frontend tests.
+- Is organized into modular architecture with separate backend and frontend components.
+- Is fully supported by the backend and frontend tests.
 
 ## Technology stack:
 
@@ -55,10 +55,10 @@ The application helps developers gain deep insights into their work and assist t
 1. Clone the repository:
     ```bash
     git clone https://github.com/rsp-lab/RepoReviewer.git
-    cd RepoReviewer
     ```
 2. Navigate to the backend directory:
     ```bash
+    cd RepoReviewer
     cd backend
     ```
 3. Build and run the Spring Boot application:
