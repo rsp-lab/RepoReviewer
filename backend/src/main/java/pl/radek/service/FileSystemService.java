@@ -114,7 +114,18 @@ public class FileSystemService
     }
     
     public void deleteDirectory(File dir) {
+        if (dir == null) {
+            log.warn("Directory is null, cannot delete.");
+            return;
+        }
+        
+        if (!dir.isDirectory()) {
+            log.warn("Cannot delete if it is not a directory: {}.", dir.getAbsolutePath());
+            return;
+        }
+        
         makeWritableRecursively(dir);
+        
         if (FileSystemUtils.deleteRecursively(dir))
             log.debug("Deleted directory: {}", dir.getAbsolutePath());
         else

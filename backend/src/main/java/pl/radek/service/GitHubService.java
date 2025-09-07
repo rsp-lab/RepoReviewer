@@ -12,6 +12,7 @@ import java.io.File;
 public class GitHubService
 {
     public void cloneGitRepository(final String repoUrl, final File tempDir) {
+        log.debug("Cloning repository: {}", repoUrl);
         try {
             try (Git git = Git.cloneRepository()
                               .setURI(repoUrl)
@@ -21,6 +22,7 @@ public class GitHubService
                               .setTimeout(60).call()) {
                 log.debug("Repository ({}) successfully cloned into directory: {}",
                         repoUrl, tempDir);
+                git.getRepository().close();
             }
         }
         catch (Exception e) {
