@@ -5,7 +5,7 @@ target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-**/src/resources/application-radek.yaml
+src/main/resources/application-radek.yaml
 
 ### STS ###
 .apt_generated
